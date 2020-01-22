@@ -20,7 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 //ctl+alt + o убрать не используемые импорты
-//ctr alt i автовыравнивание кода!
+//ctr+alt + i автовыравнивание кода!
+//ctrl + shift + f9 fast build !!!!!!!!!!!!!!!!!!!!!1
 
 @Controller
 public class MainController {
@@ -36,14 +37,14 @@ public class MainController {
     private String uploadPath;
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting(@RequestParam(required = false, defaultValue = "Word")String name,Model model) {
+        model.addAttribute("name", name);
         return "greeting";
     }
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter,
             Model model) {
         Iterable<Message> messages = messageRepo.findAll();
-
         if (filter != null && !filter.isEmpty()) {
             messages = messageRepo.findByTag(filter);
         } else {
